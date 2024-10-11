@@ -1,3 +1,4 @@
+import Today from "@/components/containers/today";
 import MobileNav from "@/components/nav/mobile-nav";
 import SideBar from "@/components/nav/side-bar";
 import TodoList from "@/components/todos/todo-list";
@@ -9,7 +10,7 @@ export default function Home() {
       <div className="flex flex-col">
         <MobileNav />
         <main className="flex flex-1 flex-col gap-4 p-4 lg:px-8">
-          <TodoList />
+          <Today />
         </main>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
-import { auth } from "@/auth";
 import Providers from "../providers";
+import { auth } from "@/auth";
 
 export default async function LoggedInLayout({
   children,

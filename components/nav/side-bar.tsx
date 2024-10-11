@@ -10,43 +10,23 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { primaryNavItems } from "@/utils";
+import UserProfile from "./user-profile";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useEffect, useState } from "react";
-import { Calendar, CalendarDays, Grid2X2, Hash, Inbox, PlusIcon } from "lucide-react";
+import { Hash, PlusIcon } from "lucide-react";
 import { Doc } from "@/convex/_generated/dataModel";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import AddProjectDialog from "../projects/add-project-dialog";
 import AddLabelDialog from "../labels/add-label-dialog";
-import UserProfile from "./user-profile";
 
 interface MyListTitleType {
   [key: string]: string;
 }
 
 export default function SideBar() {
-    const primaryNavItems = [
-        {
-            name:'Inbox',
-            link:'/loggedin',
-            icon:<Inbox className="w-4 h-4"/>
-        },{
-            name:'Today',
-            link:'/loggedin/today',
-            icon:<Calendar className="w-4 h-4"/>
-        },
-        {
-            name:'Upcoming',
-            link:'/loggedin/upcoming',
-            icon:<CalendarDays className="w-4 h-4"/>
-        },{
-            name:'Filters & Labels',
-            link:'/loggedin/filter-labels',
-            icon:<Grid2X2 className="w-4 h-4"/>
-        },
-    ]
   const pathname = usePathname();
 
   const projectList = useQuery(api.projects.getProjects);

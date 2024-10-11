@@ -14,7 +14,7 @@ import { primaryNavItems } from "@/utils";
 import Image from "next/image";
 import UserProfile from "./user-profile";
 
-import todovexLogo from "@/public/logo/todovex.svg";
+// import todovexLogo from "@/public/logo/todovex.svg";
 import SearchForm from "./search-form";
 
 export default function MobileNav({
@@ -82,7 +82,7 @@ export default function MobileNav({
           <SearchForm />
         </div>
         <div className="place-content-center w-12 h-12 lg:w-16 lg:h-20">
-          <Image alt="logo" src={todovexLogo} />
+          {/* <Image alt="logo" src={todovexLogo} /> */}
         </div>
       </div>
     </header>

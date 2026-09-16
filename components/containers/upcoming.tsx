@@ -1,46 +1,50 @@
 "use client";
-import { api } from "@/convex/_generated/api";
-import { useQuery } from "convex/react";
-import { Dot } from "lucide-react";
 import moment from "moment";
-import { AddTaskWrapper } from "../add-tasks/add-task-button";
-import Todos from "../todos/todos";
+
+import AppShell from "../app-shell";
+import PageHeader from "../ui/page-header";
+import TaskList from "../todos/task-list";
+import { useAllTasks } from "@/lib/api";
+import { groupTasksByDay, isOverdue } from "@/lib/task-view";
 
 export default function Upcoming() {
-  const groupTodosByDate = useQuery(api.todos.groupTodosByDate) ?? [];
-  const overdueTodos = useQuery(api.todos.overdueTodos) ?? [];
+  const { data: tasks, isLoading } = useAllTasks();
 
-  if (groupTodosByDate === undefined || overdueTodos === undefined) {
-    <p>Loading...</p>;
-  }
+  const open = tasks.filter((t) => !t.is_completed);
+  const overdue = open.filter((t) => isOverdue(t));
+  const groups = groupTasksByDay(open);
+  const keys = Object.keys(groups).sort();
+
   return (
-    <div className="xl:px-40">
-      <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold md:text-2xl">Upcoming</h1>
-      </div>
-      <div className="flex flex-col gap-1 py-4">
-        <p className="font-bold flex text-sm">Overdue</p>
-        <Todos items={overdueTodos} />
-      </div>
-      <div className="pb-6">
-        <AddTaskWrapper />
-      </div>
-      <div className="flex flex-col gap-1 py-4">
-        {Object.keys(groupTodosByDate || {}).map((dueDate) => {
-          return (
-            <div key={dueDate} className="mb-6">
-              <p className="font-bold flex text-sm items-center">
-                {moment(dueDate).format("LL")} <Dot />
-                {moment(dueDate).format("dddd")}
-              </p>
-              <ul>
-                <Todos items={groupTodosByDate[dueDate]} />
-                <AddTaskWrapper />
-              </ul>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <AppShell navTitle="Upcoming" navLink="/loggedin/upcoming">
+      <PageHeader
+        title="Upcoming"
+        subtitle="Everything you’ve scheduled, day by day."
+      />
+
+      {overdue.length > 0 && (
+        <section className="mb-8">
+          <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-[hsl(var(--warning))]">
+            Overdue · {overdue.length}
+          </h2>
+          <TaskList tasks={overdue} projects={projects} />
+        </section>
+      )}
+
+      {keys.length === 0 ? (
+        <div className="border-b border-border py-16 text-center text-sm text-muted-foreground">
+          Nothing scheduled. Add a due date to a task to see it here.
+        </div>
+      ) : (
+        keys.map((key) => (
+          <section key={key} className="mb-8">
+            <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              {moment(key, "YYYY-MM-DD").format("dddd, MMMM D")}
+            </h2>
+            <TaskList tasks={groups[key]} projects={projects} />
+          </section>
+        ))
+      )}
+    </AppShell>
   );
 }

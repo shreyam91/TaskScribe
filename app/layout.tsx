@@ -1,22 +1,30 @@
 import type { Metadata } from "next";
-import { Noto_Sans_Georgian } from "next/font/google";
+import { Newsreader, Inter } from "next/font/google";
 import "./globals.css";
-// import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/toaster";
 
-const defaultFont = Noto_Sans_Georgian({ subsets: ["latin"] });
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 const ORIGIN_URL =
   process.env.NODE === "production"
-    ? "https://todovex.ai"
+    ? "https://taskscribe.ai"
     : "http://localhost:3000";
 
 export const metadata: Metadata = {
-  title: "Task Scribe.ai",
+  title: "TaskScribe",
   description:
-    "TodoVex seamlessly organizes your tasks and predicts what's nextusing AI.",
-  icons: {
-    // icon: "/icon.ico",
-  },
+    "TaskScribe helps you organize your tasks and stay focused on what matters.",
+  icons: {},
   metadataBase: new URL(ORIGIN_URL),
   alternates: {
     canonical: ORIGIN_URL,
@@ -30,9 +38,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={defaultFont.className}>
-      {children}
-        {/* <Toaster /> */}
+      <body
+        className={`${newsreader.variable} ${inter.variable} font-sans`}
+      >
+        {children}
+        <Toaster />
       </body>
     </html>
   );

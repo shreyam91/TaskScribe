@@ -1,227 +1,281 @@
 "use client";
-import { signInAction } from "@/actions/auth-action";
-import { Button } from "@/components/ui/button";
-// import todovexLogo from "@/public/logo/todovex.svg";
-import clsx from "clsx";
-import { Loader, StepForward } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import {
+  Calendar,
+  CalendarDays,
+  FolderKanban,
+  Inbox,
+  Bell,
+  Heart,
+  Bot,
+  Check,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-import { useFormStatus } from "react-dom";
+const AREAS = [
+  { icon: <Inbox className="h-4 w-4" />, name: "Inbox", desc: "Everything uncategorized, in one clean list." },
+  { icon: <Calendar className="h-4 w-4" />, name: "Today", desc: "What's due now — and what slipped." },
+  { icon: <CalendarDays className="h-4 w-4" />, name: "Upcoming", desc: "The next days, grouped by date." },
 
-export default function LoginForm() {
+  { icon: <Bell className="h-4 w-4" />, name: "Reminders", desc: "Recurring nudges timed to your day." },
+  { icon: <Heart className="h-4 w-4" />, name: "Wellness", desc: "Water and break prompts that keep you going." },
+  { icon: <Bot className="h-4 w-4" />, name: "Virtual Me", desc: "A companion that responds as you work." },
+];
+
+export default function LandingPage() {
   return (
-    <main className="bg-gradient-to-r from-purple-200 to-orange-200 h-full min-h-screen">
-      <div className="container relative m-0 mx-auto py-10 md:px-10">
-        <div className="max-width flex items-center justify-center lg:justify-between">
-          <Link className="flex items-center gap-1" href="/loggedin">
-            {/* <Image
-              src={todovexLogo}
-              width="50"
-              height="50"
-              alt="logo"
-              className="h-16 w-20 md:h-16 md:w-20"
-            /> */}
-            <h1 className="text-xl hidden lg:flex font-medium text-gray-950 md:text-3xl">
-              TodoVex
-            </h1>
-          </Link>
-          <div className="hidden lg:flex w-fit items-center">
-            <form action={signInAction}>
-              <GoogleSignInButton />
-            </form>
-          </div>
+    <main className="flex min-h-screen flex-col bg-background">
+      <header className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-5 md:px-10">
+        <span className="font-serif text-xl font-medium tracking-tight">
+          TaskScribe
+        </span>
+        <Button asChild size="sm">
+          <Link href="/loggedin">Open app</Link>
+        </Button>
+      </header>
+
+      {/* Hero */}
+      <section className="mx-auto w-full max-w-3xl flex-1 px-6 py-24 text-center md:py-28">
+        <p className="mb-6 text-sm font-medium uppercase tracking-[0.2em] text-accent">
+          A calmer way to work
+        </p>
+        <h1 className="text-balance font-serif text-4xl font-medium leading-[1.1] tracking-tight md:text-[3.4rem]">
+          Write it down,
+          <br />
+          then get on with it.
+        </h1>
+        <p className="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground">
+          TaskScribe is a place to capture what needs doing, see what&apos;s due
+          today, and plan the days ahead — without the noise of a full
+          project-management suite.
+        </p>
+        <div className="mt-10 flex flex-col items-center gap-3">
+          <Button asChild size="lg">
+            <Link href="/loggedin">Open TaskScribe</Link>
+          </Button>
+          <span className="text-xs text-muted-foreground">
+            Runs locally. No account, no sign-up.
+          </span>
         </div>
-        <div className="w-full px-4 pt pt-12 md:px-4 lg:px-8 xl:px-10 2xl:px-0">
-          <div className="flex h-full w-full flex-col items-center justify-center">
-            <span
-              rel="noreferrer"
-              className="mb-6 cursor-pointer rounded-2xl border border-black px-4 py-1 text-xs text-slate-600 transition duration-300 ease-in-out hover:text-slate-700 sm:text-base text-center"
-            >
-              Powered by{" "}
-              <a
-                className="font-bold"
-                target="_blank"
-                href="https://convex.dev/c/todovex"
-              >
-                Convex{" "}
-              </a>
-              and{" "}
-              <a
-                className="font-bold"
-                target="_blank"
-                href="https://www.openai.com/"
-              >
-                OpenAI ✨
-              </a>
-            </span>
-            <h1 className="inline-block text-center text-4xl font-medium tracking-tighter text-dark lg:text-7xl">
-              An Open Source AI-Powered{" "}
-              <br className="hidden lg:inline-block" />
-              Todoist Clone
-            </h1>
-            <h2 className="mt-8 text-center text-xl font-light tracking-tight lg:text-3xl">
-              TodoVex seamlessly{" "}
-              <span className="font-bold px-1">organizes your tasks</span> and
-              <br className="hidden lg:inline-block" />
-              <span className="font-bold px-1">predicts what&apos;s next</span>
-              using AI.
-            </h2>
-            <div className="mt-12 flex flex-col gap-4">
-              <form action={signInAction}>
-                <GetStartedButton />
-              </form>
-              <div className="w-fit items-center">
-                <Button
-                  className="text-xl text-center px-4 py-7 bg-transparent border-purple-500/50"
-                  variant={"outline"}
-                >
-                  Star on Github ⭐️
-                </Button>
-              </div>
+      </section>
+
+      {/* Divider */}
+      <div className="mx-auto w-full max-w-5xl border-t border-border" />
+
+      {/* The workspace rail */}
+      <section className="mx-auto w-full max-w-5xl px-6 py-20 md:px-10">
+        <h2 className="max-w-xl font-serif text-3xl font-medium tracking-tight md:text-4xl">
+          One calm workspace, seven clear views.
+        </h2>
+        <p className="mt-4 max-w-xl text-lg text-muted-foreground">
+          Every screen is a single, focused question. Pick the answer you need
+          at the moment.
+        </p>
+        <div className="mt-12 grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+          {AREAS.map((a) => (
+            <div key={a.name} className="bg-background p-6">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-accent">
+                {a.icon}
+              </span>
+              <h3 className="mt-4 font-serif text-lg font-medium">{a.name}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                {a.desc}
+              </p>
             </div>
-          </div>
+          ))}
         </div>
-      </div>
-      <div className="">
-        <div className="flex items-center justify-center">
-          <Image
-            alt="mobile"
-            loading="lazy"
-            width="500"
-            height="600"
-            className="z-10 max-w-[400px]"
-            src={"/mobile.png"}
+      </section>
+
+      {/* Divider */}
+      <div className="mx-auto w-full max-w-5xl border-t border-border" />
+
+      {/* Features */}
+      <section className="mx-auto w-full max-w-5xl px-6 py-20 md:px-10">
+        <h2 className="font-serif text-3xl font-medium tracking-tight md:text-4xl">
+          Built around doing, not managing.
+        </h2>
+        <p className="mt-4 max-w-xl text-lg text-muted-foreground">
+          A few simple tools, given room to work well.
+        </p>
+        <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+          <Feature
+            title="Quick capture"
+            description="Type a task and press Enter. No categories, no ceremony — just get it out of your head."
           />
-          <Image
-            src="/desktop.png"
-            alt="laptop"
-            loading="lazy"
-            width="1000"
-            height="500"
-            data-nimg="1"
-            className="h-full -ml-28 mt-10 hidden lg:flex"
+          <Feature
+            title="Due dates that surface"
+            description="Today and overdue sit at the top so the important thing is always the thing you see first."
+          />
+          <Feature
+            title="Projects"
+            description="Group related tasks and watch progress fill in as you check things off."
+          />
+          <Feature
+            title="Recurring reminders"
+            description="Daily, weekdays, weekly, or every few days. Set it once; the next trigger is calculated for you."
+          />
+          <Feature
+            title="Priorities, not clutter"
+            description="A quiet priority marker keeps high and low apart. Nothing loudly in your face."
+          />
+          <Feature
+            title="Good-habit nudges"
+            description="Optional water and break prompts, plus a companion character if you'd like the company."
           />
         </div>
-      </div>
-      <div className="flex items-center justify-center">
-        <footer className="bottom-0 container mx-auto my-5 flex flex-col items-center justify-between space-y-3 border-t space-x-4 px-3 pt-4 text-center sm:flex-row sm:pt-2 md:text-lg">
+      </section>
+
+      {/* Divider */}
+      <div className="mx-auto w-full max-w-5xl border-t border-border" />
+
+      {/* How it works */}
+      <section className="mx-auto w-full max-w-3xl px-6 py-20 md:px-10">
+        <h2 className="font-serif text-3xl font-medium tracking-tight md:text-4xl">
+          How it works
+        </h2>
+        <p className="mt-4 text-lg text-muted-foreground">
+          No setup wizard, no onboarding. Just open it and start writing.
+        </p>
+        <div className="mt-14">
+          <Step
+            number="1"
+            title="Open your inbox"
+            description="The inbox holds every task you haven't organized yet — a clean starting point."
+          />
+          <Step
+            number="2"
+            title="Write it down, add a date"
+            description="Give a task a name, a priority, and a due date. The extra fields stay out of the way until you need them."
+          />
+          <Step
+            number="3"
+            title="Check it off"
+            description="Completed tasks drop out of the active list but stay recorded. Progress fills in automatically."
+          />
+        </div>
+      </section>
+
+      {/* Privacy note */}
+      <section className="mx-auto w-full max-w-5xl border-t border-border px-6 py-20 md:px-10">
+        <div className="grid gap-10 md:grid-cols-2">
           <div>
-            Powered by{" "}
-            <a
-              href="https://convex.dev/c/todovex"
-              target="_blank"
-              className="pr-1 font-bold transition hover:text-black/50"
-            >
-              Convex
-            </a>
-            and
-            <a
-              href="https://www.openai.com/"
-              target="_blank"
-              className="pl-1 font-bold transition hover:text-black/50"
-            >
-              OpenAI
-            </a>
+            <h2 className="font-serif text-3xl font-medium tracking-tight">
+              Yours, by default.
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              TaskScribe runs as a local, single-user workspace. There&apos;s no
+              account, no cloud account to manage, and nothing about your tasks
+              is sent anywhere.
+            </p>
           </div>
-          <div className="flex space-x-4 pb-4 sm:pb-0">
-            <a
-              className="group"
-              aria-label="Twitter"
-              href="https://twitter.com/kulkarniankita9"
-            >
-              <svg
-                aria-hidden="true"
-                className="h-6 w-6 fill-slate-500 group-hover:fill-blue-500"
-              >
-                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0 0 22 5.92a8.19 8.19 0 0 1-2.357.646 4.118 4.118 0 0 0 1.804-2.27 8.224 8.224 0 0 1-2.605.996 4.107 4.107 0 0 0-6.993 3.743 11.65 11.65 0 0 1-8.457-4.287 4.106 4.106 0 0 0 1.27 5.477A4.073 4.073 0 0 1 2.8 9.713v.052a4.105 4.105 0 0 0 3.292 4.022 4.093 4.093 0 0 1-1.853.07 4.108 4.108 0 0 0 3.834 2.85A8.233 8.233 0 0 1 2 18.407a11.615 11.615 0 0 0 6.29 1.84"></path>
-              </svg>
-            </a>
-            <a
-              className="group"
-              aria-label="GitHub"
-              href="https://github.com/kulkarniankita/todoist-clone"
-            >
-              <svg
-                aria-hidden="true"
-                className="h-6 w-6 fill-slate-500 group-hover:fill-slate-900"
-              >
-                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"></path>
-              </svg>
-            </a>
-            <a
-              className="group"
-              aria-label="GitHub"
-              href="https://github.com/kulkarniankita/todoist-clone"
-            >
-              <svg
-                viewBox="0 0 256 180"
-                width="256"
-                height="180"
-                xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="xMidYMid"
-                className="h-6 w-6 fill-slate-500 group-hover:fill-primary"
-              >
-                <path d="M250.346 28.075A32.18 32.18 0 0 0 227.69 5.418C207.824 0 127.87 0 127.87 0S47.912.164 28.046 5.582A32.18 32.18 0 0 0 5.39 28.24c-6.009 35.298-8.34 89.084.165 122.97a32.18 32.18 0 0 0 22.656 22.657c19.866 5.418 99.822 5.418 99.822 5.418s79.955 0 99.82-5.418a32.18 32.18 0 0 0 22.657-22.657c6.338-35.348 8.291-89.1-.164-123.134Z" />
-                <path
-                  fill="#FFF"
-                  d="m102.421 128.06 66.328-38.418-66.328-38.418z"
-                />
-              </svg>
-            </a>
+          <ul className="flex flex-col justify-center gap-3 text-sm text-muted-foreground">
+            <li className="flex items-center gap-3">
+              <Check className="h-4 w-4 shrink-0 text-accent" /> No sign-up, no sign-in
+            </li>
+            <li className="flex items-center gap-3">
+              <Check className="h-4 w-4 shrink-0 text-accent" /> Your data lives in your own database
+            </li>
+            <li className="flex items-center gap-3">
+              <Check className="h-4 w-4 shrink-0 text-accent" /> Works offline-friendly on a local server
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="mx-auto w-full max-w-3xl border-t border-border px-6 py-20 md:px-10">
+        <h2 className="font-serif text-3xl font-medium tracking-tight md:text-4xl">
+          Questions
+        </h2>
+        <div className="mt-10">
+          <FAQ
+            question="Do I need an account?"
+            answer="No. TaskScribe is a local, single-user workspace. Point it at your own database and you're done — no accounts, no providers."
+          />
+          <FAQ
+            question="What are reminders?"
+            answer="A reminder is a scheduled nudge tied to a task or to nothing at all. You can set one for a specific date and time, or make it repeat daily, on weekdays, weekly, or every few days."
+          />
+          <FAQ
+            question="Is there a mobile app?"
+            answer="The web app is responsive and works well on phone and tablet browsers. A desktop companion is planned to sit beside it."
+          />
+          <FAQ
+            question="What is 'Virtual Me'?"
+            answer="An optional companion character that responds as you work — a greeting in the morning, a gentle or direct nudge when a reminder fires. It's off by default."
+          />
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="mx-auto w-full max-w-2xl border-t border-border px-6 py-24 text-center md:px-10">
+        <h2 className="font-serif text-3xl font-medium tracking-tight md:text-4xl">
+          Ready to clear your head?
+        </h2>
+        <p className="mx-auto mt-4 max-w-md text-lg text-muted-foreground">
+          Open the app and write the first thing down.
+        </p>
+        <div className="mt-10">
+          <Button asChild size="lg">
+            <Link href="/loggedin">Open TaskScribe</Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border">
+        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-8 md:flex-row md:px-10">
+          <div className="flex items-center gap-4">
+            <span className="font-serif text-base font-medium">TaskScribe</span>
+            <span className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()}
+            </span>
           </div>
-        </footer>
-      </div>
+          <span className="text-sm text-muted-foreground">
+            Local · single-user · your data stays yours
+          </span>
+        </div>
+      </footer>
     </main>
   );
 }
-function GetStartedButton() {
-  const { pending } = useFormStatus();
 
+/* ── Subcomponents ────────────────────────────────────────── */
+
+function Feature({ title, description }: { title: string; description: string }) {
   return (
-    <button
-      disabled={pending}
-      type="submit"
-      className="flex items-center justify-center px-8 py-4 mb-2 me-2 overflow-hidden text-xl font-medium text-gray-100 rounded-xl group bg-gradient-to-br from-purple-600 to-orange-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-blue-800"
-    >
-      <span className="flex items-center gap-1">
-        {pending ? (
-          <span className=" px-16">
-            <Loader className="w-5 h-5" />
-          </span>
-        ) : (
-          <>
-            Get Started
-            <StepForward />
-          </>
-        )}
-      </span>
-    </button>
+    <div className="flex flex-col gap-3">
+      <h3 className="text-base font-medium tracking-tight">{title}</h3>
+      <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
+    </div>
   );
 }
 
-function GoogleSignInButton() {
-  const { pending } = useFormStatus();
-
+function Step({
+  number,
+  title,
+  description,
+}: {
+  number: string;
+  title: string;
+  description: string;
+}) {
   return (
-    <button
-      disabled={pending}
-      className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-    >
-      <span
-        className={clsx(
-          "relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0",
-          pending && "px-16"
-        )}
-      >
-        {pending ? (
-          <span className="">
-            <Loader className="w-5 h-5" />
-          </span>
-        ) : (
-          "Sign in with Google"
-        )}
-      </span>
-    </button>
+    <div className="flex gap-6 border-t border-border py-8">
+      <span className="font-serif text-2xl font-medium text-muted-foreground">{number}</span>
+      <div className="flex flex-col gap-1">
+        <h3 className="text-base font-medium">{title}</h3>
+        <p className="max-w-lg text-sm leading-relaxed text-muted-foreground">{description}</p>
+      </div>
+    </div>
+  );
+}
+
+function FAQ({ question, answer }: { question: string; answer: string }) {
+  return (
+    <div className="border-t border-border py-6">
+      <h3 className="text-sm font-medium">{question}</h3>
+      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">{answer}</p>
+    </div>
   );
 }

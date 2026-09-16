@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>TaskScribe · Virtual Me</title>
+    <!-- Renderer never reaches the network; images are bundled assets. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
+    />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <div class="bubble" id="bubble" role="status" aria-live="polite"></div>
+      <img
+        class="character"
+        id="character"
+        src="/virtual_me/idle/idle_01.png"
+        alt="Virtual Me"
+        draggable="false"
+      />
+    </div>
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

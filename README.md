@@ -7,7 +7,6 @@ This project is a clone of the popular Todoist web application, built using mode
 - **User Authentication**: Secure login and registration using Auth.js
 - **Task Management**: Create, update, and delete tasks
 - **Task Categorization**: Organize tasks by projects and priorities
-- **Real-Time Updates**: Data is synchronized across the app in real time using the backend powered by Convex
 - **Responsive UI**: Mobile-friendly design using Next.js and React
 
 ## Tech Stack
@@ -19,13 +18,11 @@ This project is a clone of the popular Todoist web application, built using mode
   
 - **Backend**:
   - **Express.js**: Node.js framework to handle API requests and server-side logic
-  - **Convex**: Backend platform for managing data, handling business logic, and providing real-time updates
 
 - **Authentication**: 
   - **Auth.js**: For secure authentication and user sessions
   
 - **Database**:
-  - **Convex**: Used for task storage, user management, and synchronization across devices
 
 ## Getting Started
 
@@ -131,4 +128,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Todoist** for the inspiration behind this app
 - **Next.js** for the framework used to build the frontend
 - **Auth.js** for handling authentication securely
-- **Convex** for backend-as-a-service to handle data management and real-time updates

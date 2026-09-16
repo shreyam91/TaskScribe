@@ -1,28 +1,48 @@
-import { Calendar, CalendarDays, Grid2X2, Inbox } from "lucide-react";
+import {
+  Calendar,
+  CalendarDays,
+  LayoutDashboard,
+  Bell,
+  Heart,
+  Bot,
+  Settings,
+} from "lucide-react";
 
 export const primaryNavItems = [
   {
-    id: "primary",
-    name: "Inbox",
+    name: "Dashboard",
     link: "/loggedin",
-    icon: <Inbox className="w-4 h-4" />,
+    icon: <LayoutDashboard className="h-4 w-4" />,
   },
   {
     name: "Today",
     link: "/loggedin/today",
-    icon: <Calendar className="w-4 h-4" />,
+    icon: <Calendar className="h-4 w-4" />,
   },
   {
     name: "Upcoming",
     link: "/loggedin/upcoming",
-    icon: <CalendarDays className="w-4 h-4" />,
+    icon: <CalendarDays className="h-4 w-4" />,
   },
   {
-    id: "filters",
-    name: "Filters & Labels",
-    link: "/loggedin/filter-labels",
-    icon: <Grid2X2 className="w-4 h-4" />,
+    name: "Reminders",
+    link: "/loggedin/reminders",
+    icon: <Bell className="h-4 w-4" />,
+  },
+  {
+    name: "Wellness",
+    link: "/loggedin/wellness",
+    icon: <Heart className="h-4 w-4" />,
+  },
+  {
+    name: "Virtual Me",
+    link: "/loggedin/virtual-me",
+    icon: <Bot className="h-4 w-4" />,
+    isSection: true,
+  },
+  {
+    name: "Settings",
+    link: "/loggedin/settings",
+    icon: <Settings className="h-4 w-4" />,
   },
 ];
-
-export const GET_STARTED_PROJECT_ID = "k97fs8npdxzkr39y5vjcp9kq1d6tycm1";

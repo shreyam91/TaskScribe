@@ -1,0 +1,84 @@
+/* TaskScribe Virtual Me overlay — transparent, calm, tightly cropped. */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  user-select: none;
+  cursor: default;
+}
+
+/* Layout: character pinned to the bottom, speech bubble tucked above it. */
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100vh;
+  padding-bottom: 8px;
+  box-sizing: border-box;
+}
+
+/* The character itself is the drag handle and the interactive zone. */
+.character {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  -webkit-user-drag: none;
+  -webkit-app-region: drag;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18));
+}
+
+/* Speech bubble: small, connected by a tail to the character, never a panel. */
+.bubble {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px) scale(0.96);
+  max-width: 156px;
+  padding: 9px 13px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  color: #292524;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.bubble.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* Tail pointing down toward the character. */
+.bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  margin-left: -7px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    transition: opacity 0.12s ease;
+  }
+}
